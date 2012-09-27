@@ -1,3 +1,5 @@
 Framework based on Symfony2 components
 
 1 -> symfony/class-loader;
+
+2 -> symfony/http-foundation;
