@@ -11,37 +11,18 @@ $request = Request::createFromGlobals();
 
 $input = $request->get('name', 'World');
 
+
+$response = new Response(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+
 /**
  * SOME EXAMPLES
  */
-// the URI being requested (e.g. /about) minus any query parameters
-d($request->getPathInfo());
+$response->setContent('Hello world! - faked');
+$response->setStatusCode(200);
+$response->headers->set('Content-Type', 'text/html');
 
-// retrieve GET and POST variables respectively
-d($request->query->get('foo'));
-d($request->request->get('bar', 'default value if bar does not exist'));
-
-// retrieve SERVER variables
-d($request->server->get('HTTP_HOST'));
-
-// retrieves an instance of UploadedFile identified by foo
-d($request->files->get('foo'));
-
-// retrieve a COOKIE value
-d($request->cookies->get('PHPSESSID'));
-
-// retrieve an HTTP request header, with normalized, lowercase keys
-d($request->headers->get('host'));
-d($request->headers->get('content_type'));
-
- // GET, POST, PUT, DELETE, HEAD
-d($request->getMethod());
-
-// an array of languages the client accepts
-d($request->getLanguages());
-
-
-$response = new Response(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+// configure the HTTP cache headers
+$response->setMaxAge(10000000);
 
 $response->send();
 ?>
