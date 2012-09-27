@@ -1,11 +1,6 @@
 <?php
 
-$soma = 0;
-for ($i = 0; $i < 10; $i++) {
-      $soma +=$i;
-}
+$input = $_GET['name'];
 
-var_dump($soma);
-
-echo 'Frontcontroller';
+printf('Hello %s', $_GET['name']);
 ?>
