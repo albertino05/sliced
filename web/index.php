@@ -11,7 +11,7 @@ $request = Request::createFromGlobals();
 
 $input = $request->get('name', 'World');
 
-$response = new Response(sprintf('Hello %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
+$response = new Response(sprintf('Hell0 %s', htmlspecialchars($input, ENT_QUOTES, 'UTF-8')));
 
 $response->send();
 ?>
