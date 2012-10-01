@@ -10,5 +10,7 @@ $loader = new UniversalClassLoader();
 
 $loader->registerNamespace('Symfony\\Component\\HttpFoundation', __DIR__ . '/vendor/symfony/http-foundation');
 
+$loader->registerNamespace('Symfony\\Component\\Routing', __DIR__ . '/vendor/symfony/routing');
+
 $loader->register();
 ?>
