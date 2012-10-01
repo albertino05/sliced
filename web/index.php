@@ -13,30 +13,12 @@ $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../src/app.php';
 
 $context = new Routing\RequestContext();
-d($context);
 $context->fromRequest($request);
-d($context);
 $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
 try {
       extract($matcher->match($request->getPathInfo()), EXTR_SKIP);
       ob_start();
-      
-      /**
-       *	  Examples
-       */
-      d($name);
-
-      d($matcher->match('/hello/tin'));
-      
-      $dumper = new Routing\Matcher\Dumper\PhpMatcherDumper($routes);
-      d($dumper->dump());
-
-      $dumper2 = new Routing\Matcher\Dumper\ApacheMatcherDumper($routes);
-      d($dumper2->dump());
-
-      d($_route);
-      d($request);
 
       $response = new Response(ob_get_clean());
 } catch (Routing\Exception\ResourceNotFoundException $e) {
