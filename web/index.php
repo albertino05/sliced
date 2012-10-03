@@ -19,7 +19,7 @@ $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 try {
       extract($matcher->match($request->getPathInfo()), EXTR_SKIP);
       ob_start();
-
+echo $name;//test
       $response = new Response(ob_get_clean());
 } catch (Routing\Exception\ResourceNotFoundException $e) {
       $response = new Response('Not Found', 404);
