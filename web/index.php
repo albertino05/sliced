@@ -1,5 +1,5 @@
 <?php
-
+$time_start = microtime(true);
 // web/index.php
 
 include_once 'kint/Kint.class.php';
@@ -28,4 +28,6 @@ echo 'route => ' . $_route;//test
 }
 
 $response->send();
+
+printf("<hr> loading time: %2.4f ", (microtime(true) - $time_start));
 ?>
