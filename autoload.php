@@ -14,5 +14,18 @@ $loader->registerNamespace('Symfony\\Component\\Routing', __DIR__ . '/vendor/sym
 
 $loader->registerNamespace('Symfony\\Component\\HttpKernel', __DIR__ . '/vendor/symfony/http-kernel');
 
+//$loader->registerNamespace('Sliced', __DIR__ . '/src');
+
+/**
+ *    Here starts specific app namespaces
+ */
+
+//    Hello -> test namespace
+//$loader->registerNamespace('Hello', __DIR__ . '/src');
+
+// LeapYear -> another test namespace
+$loader->registerNamespaceFallback(__DIR__ . '/src');
+
 $loader->register();
+
 ?>

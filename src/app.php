@@ -12,20 +12,16 @@ $routes = new Routing\RouteCollection();
  */
 $routes->add('hello', new Routing\Route('/hello/{name}', array(
 	  'name' => 'World',
-	  '_controller' => 'HelloController::indexAction',
+	  '_controller' => 'Hello\\Controller\\HelloController::indexAction',
         )));
 
-class HelloController{
-      function indexAction($name, \Symfony\Component\HttpFoundation\Request $request){
-	  d($request);
-	  return new Symfony\Component\HttpFoundation\Response('name = ' . $name);
-      }
-}
-
 /**
- *    Bye
+ *    Leap Year
  */
-$routes->add('bye', new Routing\Route('/bye'));
+$routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
+	  'year' => null,
+	  '_controller' => 'Calendar\\Controller\\LeapYearController::indexAction',
+        )));
 
 return $routes;
 ?>

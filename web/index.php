@@ -18,20 +18,10 @@ $context = new Routing\RequestContext();
 $context->fromRequest($request);
 $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
-try {
-      $request->attributes->add($matcher->match($request->getPathInfo()));
-      
-      $resolver = new HttpKernel\Controller\ControllerResolver();
-      $controller = $resolver->getController($request);
-      $arguments = $resolver->getArguments($request, $controller);
+$resolver = new HttpKernel\Controller\ControllerResolver();
 
-      $response = call_user_func_array($controller, $arguments);
-} catch (Routing\Exception\ResourceNotFoundException $e) {
-      $response = new Response('Not Found', 404);
-} catch (Exception $e) {
-      d($e);
-      $response = new Response('An error occurred', 500);
-}
+$framework = new Sliced\Framework($matcher, $resolver);
+$response = $framework->handle($request);
 
 $response->send();
 
