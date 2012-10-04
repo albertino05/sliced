@@ -7,3 +7,5 @@ Framework based on Symfony2 components
 3 -> symfony/routing;
 
 4 -> symfony/http-kernel;
+
+5 -> symfony/event-dispatcher;

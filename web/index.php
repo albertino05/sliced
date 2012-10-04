@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 use Symfony\Component\HttpKernel;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../src/app.php';
@@ -20,10 +21,18 @@ $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 
 $resolver = new HttpKernel\Controller\ControllerResolver();
 
-$framework = new Sliced\Framework($matcher, $resolver);
+$dispatcher = new EventDispatcher();
+$dispatcher->addListener('response', function (Sliced\ResponseEvent $event) {
+	    $response = $event->getResponse();
+	    $response->setContent('<h5> before </h5>'.$response->getContent() . '<h5> after </h5>');
+	    $headers = $response->headers;
+	    $headers->set('Test-Header', 'tst');
+        });
+
+$framework = new Sliced\Framework($dispatcher, $matcher, $resolver);
 $response = $framework->handle($request);
 
 $response->send();
 
-printf("<hr> loading time: %2.4f ", (microtime(true) - $time_start));
+printf("<hr> loading time: <b> %2.4f </b> ms", (microtime(true) - $time_start));
 ?>

@@ -14,8 +14,9 @@ $loader->registerNamespace('Symfony\\Component\\Routing', __DIR__ . '/vendor/sym
 
 $loader->registerNamespace('Symfony\\Component\\HttpKernel', __DIR__ . '/vendor/symfony/http-kernel');
 
+$loader->registerNamespace('Symfony\\Component\\EventDispatcher', __DIR__ . '/vendor/symfony/event-dispatcher');
+
 $loader->registerNamespaceFallback(__DIR__ . '/src');
 
 $loader->register();
-
 ?>
