@@ -4,4 +4,6 @@ Framework based on Symfony2 components
 
 2 -> symfony/http-foundation;
 
-3 -> symfony/routing
+3 -> symfony/routing;
+
+4 -> symfony/http-kernel;

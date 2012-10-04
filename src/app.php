@@ -10,7 +10,17 @@ $routes = new Routing\RouteCollection();
 /**
  *    Hello
  */
-$routes->add('hello', new Routing\Route('/hello/{name}', array('name' => 'World')));
+$routes->add('hello', new Routing\Route('/hello/{name}', array(
+	  'name' => 'World',
+	  '_controller' => 'HelloController::indexAction',
+        )));
+
+class HelloController{
+      function indexAction($name, \Symfony\Component\HttpFoundation\Request $request){
+	  d($request);
+	  return new Symfony\Component\HttpFoundation\Response('name = ' . $name);
+      }
+}
 
 /**
  *    Bye

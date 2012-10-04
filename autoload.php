@@ -12,5 +12,7 @@ $loader->registerNamespace('Symfony\\Component\\HttpFoundation', __DIR__ . '/ven
 
 $loader->registerNamespace('Symfony\\Component\\Routing', __DIR__ . '/vendor/symfony/routing');
 
+$loader->registerNamespace('Symfony\\Component\\HttpKernel', __DIR__ . '/vendor/symfony/http-kernel');
+
 $loader->register();
 ?>
