@@ -43,8 +43,8 @@ class Framework
 	  }
 
 	  // dispatch a response event
-	  $this->dispatcher->dispatch('response', new ResponseEvent($response, $request));
-	  $this->dispatcher->dispatch('headers', new ResponseEvent($response, $request));
+	  $this->dispatcher->dispatch('response', new Events\ResponseEvent($response, $request));
+	  $this->dispatcher->dispatch('headers', new Events\ResponseEvent($response, $request));
 
 	  return $response;
       }

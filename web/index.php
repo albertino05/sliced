@@ -21,7 +21,8 @@ $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 $resolver = new HttpKernel\Controller\ControllerResolver();
 
 $dispatcher = new EventDispatcher();
-$dispatcher->addSubscriber(new Sliced\TestListener());
+$dispatcher->addSubscriber(new Sliced\Events\Listeners\TestListener());
+$dispatcher->addSubscriber(new Sliced\Events\Listeners\MenuListener($routes, $context));
 
 $framework = new Sliced\Framework($dispatcher, $matcher, $resolver);
 $response = $framework->handle($request);

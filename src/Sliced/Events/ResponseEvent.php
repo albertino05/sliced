@@ -1,8 +1,8 @@
 <?php
 
-// src/Sliced/ResponseEvent.php
+// src/Sliced/Events/ResponseEvent.php
 
-namespace Sliced;
+namespace Sliced\Events;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

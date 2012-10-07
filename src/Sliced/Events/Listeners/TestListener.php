@@ -1,10 +1,11 @@
 <?php
 
-// example.com/src/Sliced/TestListener.php
+// src/Sliced/Events/Listeners/TestListener.php
 
-namespace Sliced;
+namespace Sliced\Events\Listeners;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Sliced\Events\ResponseEvent;
 
 class TestListener implements EventSubscriberInterface
 {
@@ -26,6 +27,7 @@ class TestListener implements EventSubscriberInterface
 	  $response = $event->getResponse();
 	  $headers = $response->headers;
 	  $headers->set('test', 'motherfucker');
+	  $event->stopPropagation();
       }
 
       public static function getSubscribedEvents()
@@ -33,8 +35,8 @@ class TestListener implements EventSubscriberInterface
 	  /* return array('response' => 'onResponse'); */
 	  return array(
 	      'response' => array(
-		array('onResponse', -5),
-		array('ini', -12)
+		array('onResponse', -5),//negative e after
+		array('ini', 3) //positive is before
 	      ),
 	      'headers' => array(
 		array('setHeader'),
