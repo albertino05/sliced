@@ -7,7 +7,6 @@ include_once 'kint/Kint.class.php';
 require_once __DIR__ . '/../autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing;
 use Symfony\Component\HttpKernel;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -22,12 +21,7 @@ $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 $resolver = new HttpKernel\Controller\ControllerResolver();
 
 $dispatcher = new EventDispatcher();
-$dispatcher->addListener('response', function (Sliced\ResponseEvent $event) {
-	    $response = $event->getResponse();
-	    $response->setContent('<h5> before </h5>'.$response->getContent() . '<h5> after </h5>');
-	    $headers = $response->headers;
-	    $headers->set('Test-Header', 'tst');
-        });
+$dispatcher->addSubscriber(new Sliced\TestListener());
 
 $framework = new Sliced\Framework($dispatcher, $matcher, $resolver);
 $response = $framework->handle($request);
