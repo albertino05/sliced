@@ -20,6 +20,7 @@ class TestListener implements EventSubscriberInterface
       {
 	  $response = $event->getResponse();
 	  $response->setContent('<h5>antes</h5>' . $response->getContent() . '<h5>depois</h5>');
+	  //$event->stopPropagation();
       }
 
       public function setHeader(ResponseEvent $event)
@@ -27,7 +28,7 @@ class TestListener implements EventSubscriberInterface
 	  $response = $event->getResponse();
 	  $headers = $response->headers;
 	  $headers->set('test', 'motherfucker');
-	  $event->stopPropagation();
+	  
       }
 
       public static function getSubscribedEvents()
