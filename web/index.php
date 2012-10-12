@@ -21,8 +21,9 @@ $matcher = new Routing\Matcher\UrlMatcher($routes, $context);
 $resolver = new HttpKernel\Controller\ControllerResolver();
 
 $dispatcher = new EventDispatcher();
-$dispatcher->addSubscriber(new Sliced\Events\Listeners\TestListener());
-$dispatcher->addSubscriber(new Sliced\Events\Listeners\MenuListener($routes, $context));
+$dispatcher->addSubscriber(new \Sliced\EventDispatcher\Subscribers\Test());
+$dispatcher->addSubscriber(new \Sliced\EventDispatcher\Subscribers\Menu($routes, $context));
+$dispatcher->addListener('response', array(new Sliced\EventDispatcher\Listeners\Google(), 'onResponse'), -244);
 
 $framework = new Sliced\Framework($dispatcher, $matcher, $resolver);
 $response = $framework->handle($request);

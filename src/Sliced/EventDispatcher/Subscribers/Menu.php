@@ -1,11 +1,11 @@
 <?php
 
-// src/Sliced/Events/Listeners/TestListener.php
+// src/Sliced/EventDispatcher/Subscribers/Menu.php
 
-namespace Sliced\Events\Listeners;
+namespace Sliced\EventDispatcher\Subscribers;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Sliced\Events\ResponseEvent;
+use Sliced\EventDispatcher\Events\ResponseEvent;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 
 /**
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
   echo $generator->generate('hello', array('name' => 'Fabien'));
  * 
  */
-class MenuListener implements EventSubscriberInterface
+class Menu implements EventSubscriberInterface
 {
 
       protected $generator;

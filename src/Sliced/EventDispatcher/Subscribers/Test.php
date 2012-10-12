@@ -1,13 +1,13 @@
 <?php
 
-// src/Sliced/Events/Listeners/TestListener.php
+// src/Sliced/EventDispatcher/Subscribers/Test.php
 
-namespace Sliced\Events\Listeners;
+namespace Sliced\EventDispatcher\Subscribers;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Sliced\Events\ResponseEvent;
+use Sliced\EventDispatcher\Events\ResponseEvent;
 
-class TestListener implements EventSubscriberInterface
+class Test implements EventSubscriberInterface
 {
 
       public function onResponse(ResponseEvent $event)
