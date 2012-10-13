@@ -9,3 +9,5 @@ Framework based on Symfony2 components
 4 -> symfony/http-kernel;
 
 5 -> symfony/event-dispatcher;
+
+6 -> symfony/http-kernel(http cache);

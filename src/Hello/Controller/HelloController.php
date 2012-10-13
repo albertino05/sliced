@@ -12,7 +12,8 @@ class HelloController
 
       function indexAction($name, Request $request)
       {
-	  return new Response('name = ' . $name);
+	  $response = new Response('name -> ' . $name . rand(0, 100));
+	  return $response;
       }
 
 }

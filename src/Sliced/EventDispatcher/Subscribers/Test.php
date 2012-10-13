@@ -36,7 +36,7 @@ class Test implements EventSubscriberInterface
 	  /* return array('response' => 'onResponse'); */
 	  return array(
 	      'response' => array(
-		array('onResponse', -5),//negative e after
+		array('onResponse', -5),//negative is after
 		array('ini', 3) //positive is before
 	      ),
 	      'headers' => array(

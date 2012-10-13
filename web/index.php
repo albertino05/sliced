@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing;
 use Symfony\Component\HttpKernel;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpKernel\HttpCache\HttpCache;
+use Symfony\Component\HttpKernel\HttpCache\Store;
+use Symfony\Component\HttpKernel\HttpCache\Esi;
 
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../src/app.php';
@@ -26,6 +29,7 @@ $dispatcher->addSubscriber(new \Sliced\EventDispatcher\Subscribers\Menu($routes,
 $dispatcher->addListener('response', array(new Sliced\EventDispatcher\Listeners\Google(), 'onResponse'), -244);
 
 $framework = new Sliced\Framework($dispatcher, $matcher, $resolver);
+$framework = new HttpCache($framework, new Store(__DIR__.'/../src/Sliced/Cache'),new Esi(), array('debug' => true));
 $response = $framework->handle($request);
 
 $response->send();
