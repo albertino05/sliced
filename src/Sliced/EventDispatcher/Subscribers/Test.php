@@ -61,7 +61,6 @@ class Test implements EventSubscriberInterface
 	  
 	  $response->isNotModified($event->getRequest());
 
-	  df($response->getStatusCode());
 	  $event->setResponse($response);
       }
 
