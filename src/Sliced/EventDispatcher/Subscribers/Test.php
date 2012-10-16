@@ -5,42 +5,83 @@
 namespace Sliced\EventDispatcher\Subscribers;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Sliced\EventDispatcher\Events\ResponseEvent;
+use Symfony\Component\HttpKernel;
+use Symfony\Component\HttpFoundation\Response;
 
 class Test implements EventSubscriberInterface
 {
 
-      public function onResponse(ResponseEvent $event)
+      /**
+       * 
+       * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+       * 
+       *  if http cache is set(like time to live) this is NOT executed
+       */
+      public function onRequest(HttpKernel\Event\GetResponseEvent $event)
       {
-	  $response = $event->getResponse();
-	  $response->setContent('<h5>before</h5>' . $response->getContent() . '<h5>after</h5>');
+	  /* echo 'neco'; */
       }
 
-      public function ini(ResponseEvent $event)
+      /**
+       * 
+       * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+       * 
+       * Executed on response, if http cache is set(like time to live) this is NOT executed
+       */
+      public function onResponse(HttpKernel\Event\FilterResponseEvent $event)
       {
-	  $response = $event->getResponse();
-	  $response->setContent('<h5>antes</h5>' . $response->getContent() . '<h5>depois</h5>');
-	  //$event->stopPropagation();
+	  /* d($event->getName()); */
+	 // echo 'response';
       }
 
-      public function setHeader(ResponseEvent $event)
+      /**
+       * 
+       * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
+       * 
+       * For this to be executed controller need NOT return a Response
+       * Like the above when cached this is NOT executed
+       */
+      public function onView(HttpKernel\Event\GetResponseForControllerResultEvent $event)
       {
-	  $response = $event->getResponse();
-	  $headers = $response->headers;
-	  $headers->set('test', 'motherfucker');
+	  $response = new Response($event->getControllerResult());
+	  $response->setContent('<h1> ' . $response->getContent() . ' </h1>');
+
+/*	  $date = new \DateTime();*/
+	  /*$date->modify('+20 seconds');*/
+	  /*$response->setExpires($date);*/
+	  /*$response->setPrivate();*/
 	  
+	  //$response->setMaxAge(30);
+
+	  //$response->setSharedMaxAge(30);
+	  
+	  $response->setEtag(md5($response->getContent()));
+	  
+	  $response->setPublic();
+	  
+	  $response->isNotModified($event->getRequest());
+
+	  df($response->getStatusCode());
+	  $event->setResponse($response);
       }
 
+      /**
+       * 
+       * @return array The event names to listen to
+       * positive are first executed
+       * negative are executed last
+       */
       public static function getSubscribedEvents()
       {
-	  /* return array('response' => 'onResponse'); */
 	  return array(
-	      'response' => array(
-		array('onResponse', -5),//negative is after
-		array('ini', 3) //positive is before
+	      HttpKernel\KernelEvents::REQUEST => array(
+		array('onRequest', -255)
 	      ),
-	      'headers' => array(
-		array('setHeader'),
+	      HttpKernel\KernelEvents::RESPONSE => array(
+		array('onResponse', -5),
+	      ),
+	      HttpKernel\KernelEvents::VIEW => array(
+		array('onView'),
 	      )
 	  );
       }

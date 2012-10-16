@@ -28,6 +28,7 @@ class Menu implements EventSubscriberInterface
 
       public function onResponse(ResponseEvent $event)
       {
+	  echo 'here';
 	  $links = array();
 	  $links[] = $this->generator->generate('hello', array('name' => 'Tino'), true);
 	  $links[] = $this->generator->generate('leap_year');
@@ -41,7 +42,7 @@ class Menu implements EventSubscriberInterface
 
       public static function getSubscribedEvents()
       {
-	  return array('response' => array('onResponse', -255));
+	  return array('response' => array('onResponse', -254));
       }
 
 }
