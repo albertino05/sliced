@@ -44,6 +44,10 @@ class Test implements EventSubscriberInterface
 	  //df('onView');
 	  $response = new Response($event->getControllerResult());
 
+	  $response->setEtag(md5($response->getContent()));
+	  $response->setPublic();
+	  $response->isNotModified($event->getRequest());
+
 	  $event->setResponse($response);
       }
 
