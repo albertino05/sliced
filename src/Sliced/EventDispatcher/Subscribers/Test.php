@@ -8,60 +8,66 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ *    Subscrive to this event to test all the kernel dispatchers
+ * 
+ */
 class Test implements EventSubscriberInterface
 {
 
       /**
        * 
        * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
-       * 
-       *  if http cache is set(like time to live) this is NOT executed
        */
       public function onRequest(HttpKernel\Event\GetResponseEvent $event)
       {
-	  /* echo 'neco'; */
+	  //df('onRequest');
       }
 
       /**
        * 
-       * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
-       * 
-       * Executed on response, if http cache is set(like time to live) this is NOT executed
+       * @param \Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent $event
        */
-      public function onResponse(HttpKernel\Event\FilterResponseEvent $event)
+      public function onException(HttpKernel\Event\GetResponseForExceptionEvent $event)
       {
-	  /* d($event->getName()); */
-	 // echo 'response';
+	  // df('onException');
+	  $response = new Response($event->getException()->getMessage());
+	  $event->setResponse($response);
       }
 
       /**
        * 
        * @param \Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent $event
-       * 
-       * For this to be executed controller need NOT return a Response
-       * Like the above when cached this is NOT executed
        */
       public function onView(HttpKernel\Event\GetResponseForControllerResultEvent $event)
       {
+	  //df('onView');
 	  $response = new Response($event->getControllerResult());
-	  $response->setContent('<h1> ' . $response->getContent() . ' </h1>');
-
-/*	  $date = new \DateTime();*/
-	  /*$date->modify('+20 seconds');*/
-	  /*$response->setExpires($date);*/
-	  /*$response->setPrivate();*/
-	  
-	  //$response->setMaxAge(30);
-
-	  //$response->setSharedMaxAge(30);
-	  
-	  $response->setEtag(md5($response->getContent()));
-	  
-	  $response->setPublic();
-	  
-	  $response->isNotModified($event->getRequest());
 
 	  $event->setResponse($response);
+      }
+
+      public function onController(HttpKernel\Event\FilterControllerEvent $event)
+      {
+	  //df('onController');
+      }
+
+      /**
+       * 
+       * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
+       */
+      public function onResponse(HttpKernel\Event\FilterResponseEvent $event)
+      {
+	  //df('onResponse');
+      }
+
+      /**
+       * 
+       * @param \Symfony\Component\HttpKernel\Event\PostResponseEvent $event
+       */
+      public function onTerminate(HttpKernel\Event\PostResponseEvent $event)
+      {
+	  // df('onTerminate');
       }
 
       /**
@@ -74,14 +80,23 @@ class Test implements EventSubscriberInterface
       {
 	  return array(
 	      HttpKernel\KernelEvents::REQUEST => array(
-		array('onRequest', -255)
+		array('onRequest', 50)
 	      ),
-	      HttpKernel\KernelEvents::RESPONSE => array(
-		array('onResponse', -5),
+	      HttpKernel\KernelEvents::EXCEPTION => array(
+		array('onException', 56)
 	      ),
 	      HttpKernel\KernelEvents::VIEW => array(
-		array('onView'),
-	      )
+		array('onView', -5),
+	      ),
+	      HttpKernel\KernelEvents::CONTROLLER => array(
+		array('onController'),
+	      ),
+	      HttpKernel\KernelEvents::RESPONSE => array(
+		array('onResponse', -55)
+	      ),
+	      HttpKernel\KernelEvents::TERMINATE => array(
+		array('onTerminate', 5)
+	      ),
 	  );
       }
 

@@ -12,10 +12,9 @@ class HelloController
 
       function indexAction($name, Request $request)
       {
-	 // $response = new Response('name -> ' . $name . rand(0, 100));
-	  //$response->setTtl(10);
-	  return $name ;
-	  //return $response;
+	  $response =  new Response($name . ' ! ' . rand(0,10) );
+	 $response->setTtl(20);
+	  return $response;
       }
 
 }
