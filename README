@@ -11,3 +11,5 @@ Framework based on Symfony2 components
 5 -> symfony/event-dispatcher;
 
 6 -> symfony/http-kernel(http cache);
+
+7-> symfony/dependency-injection;

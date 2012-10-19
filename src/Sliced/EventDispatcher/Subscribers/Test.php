@@ -21,7 +21,7 @@ class Test implements EventSubscriberInterface
        */
       public function onRequest(HttpKernel\Event\GetResponseEvent $event)
       {
-	  //df('onRequest');
+	  /*d($event->getRequest());*/
       }
 
       /**
@@ -53,7 +53,7 @@ class Test implements EventSubscriberInterface
 
       public function onController(HttpKernel\Event\FilterControllerEvent $event)
       {
-	  //df('onController');
+	  /*d($event->getRequest()->attributes->all());*/
       }
 
       /**
@@ -62,7 +62,7 @@ class Test implements EventSubscriberInterface
        */
       public function onResponse(HttpKernel\Event\FilterResponseEvent $event)
       {
-	  //df('onResponse');
+	  /*d($event->getRequest()->attributes->all());*/
       }
 
       /**
@@ -71,7 +71,7 @@ class Test implements EventSubscriberInterface
        */
       public function onTerminate(HttpKernel\Event\PostResponseEvent $event)
       {
-	  // df('onTerminate');
+	   /*d($event->getRequest()->attributes->all());*/
       }
 
       /**
@@ -84,7 +84,7 @@ class Test implements EventSubscriberInterface
       {
 	  return array(
 	      HttpKernel\KernelEvents::REQUEST => array(
-		array('onRequest', 50)
+		array('onRequest', 20)
 	      ),
 	      HttpKernel\KernelEvents::EXCEPTION => array(
 		array('onException', 56)
@@ -99,7 +99,7 @@ class Test implements EventSubscriberInterface
 		array('onResponse', -55)
 	      ),
 	      HttpKernel\KernelEvents::TERMINATE => array(
-		array('onTerminate', 5)
+		array('onTerminate', -250)
 	      ),
 	  );
       }
