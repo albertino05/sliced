@@ -1,5 +1,5 @@
 {
-    "hash": "7cec61febd8d82394636f7f51a01adf2",
+    "hash": "070be979f293f3c87a634804c9444581",
     "packages": [
         {
             "name": "symfony/class-loader",
@@ -49,6 +49,53 @@
                 }
             ],
             "description": "Symfony ClassLoader Component",
+            "homepage": "http://symfony.com"
+        },
+        {
+            "name": "symfony/config",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Config",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Config",
+                "reference": "dbfadc6995574df68ad9b6c7e56a68b4bd9d0fa3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Config/zipball/dbfadc6995574df68ad9b6c7e56a68b4bd9d0fa3",
+                "reference": "dbfadc6995574df68ad9b6c7e56a68b4bd9d0fa3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "1349553479",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Config\\": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Config Component",
             "homepage": "http://symfony.com"
         },
         {
@@ -388,7 +435,7 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "symfony/config": 20
+    }
 }
