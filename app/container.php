@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection;
 use Symfony\Component\DependencyInjection\Reference;
 
 $routes = include __DIR__ . '/routes.php';
+
 $parameterBag = new DependencyInjection\ParameterBag\ParameterBag();
 $parameterBag->set('name', 'value');
 $sc = new DependencyInjection\ContainerBuilder($parameterBag);

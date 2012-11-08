@@ -6,7 +6,7 @@ require_once __DIR__ . '/../autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
 
-$sc = require_once __DIR__ . '/../src/container.php';
+$sc = require_once __DIR__ . '/../app/container.php';
 
 $request = Request::createFromGlobals();
 
