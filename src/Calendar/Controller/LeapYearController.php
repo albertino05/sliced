@@ -5,14 +5,14 @@
 namespace Calendar\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Calendar\Model\LeapYear;
 
-class LeapYearController
+class LeapYearController extends \Sliced\Controller
 {
 
       public function indexAction(Request $request, $year)
       {
+	  d($this->getContainer());
 	  $leapyear = new LeapYear();
 	  if ($leapyear->isLeapYear($year)) {
 	        return 'Yep, this is a leap year!';

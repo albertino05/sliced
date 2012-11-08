@@ -6,8 +6,9 @@ use Symfony\Component\DependencyInjection;
 use Symfony\Component\DependencyInjection\Reference;
 
 $routes = include __DIR__ . '/routes.php';
-
-$sc = new DependencyInjection\ContainerBuilder();
+$parameterBag = new DependencyInjection\ParameterBag\ParameterBag();
+$parameterBag->set('name', 'value');
+$sc = new DependencyInjection\ContainerBuilder($parameterBag);
 $sc->register('context', 'Symfony\Component\Routing\RequestContext');
 
 $sc->register('matcher', 'Symfony\Component\Routing\Matcher\UrlMatcher')
@@ -35,8 +36,9 @@ $sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
 // ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
 // ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))
 
-$sc->register('framework', 'Symfony\Component\HttpKernel\HttpKernel')
-        ->setArguments(array(new Reference('dispatcher'), new Reference('resolver')));
+/*$sc->register('http_kernel', 'Symfony\Component\HttpKernel\HttpKernel')*/
+$sc->register('http_kernel', 'Sliced\Framework')
+        ->setArguments(array(new Reference('dispatcher'), new Reference('resolver'), $sc));
 
 
 return $sc;
@@ -46,7 +48,8 @@ return $sc;
 $sc->register('httpcache.store', 'Symfony\Component\HttpKernel\HttpCache\Store')
         ->setArguments(array(__DIR__ . '/../src/Sliced/Cache'));
 
-$sc->register('framework.httpcache', 'Symfony\Component\HttpKernel\HttpCache\HttpCache')
-        ->setArguments(array(new Reference('framework'), new Reference('httpcache.store')));
+$sc->register('httpcache', 'Symfony\Component\HttpKernel\HttpCache\HttpCache')
+        ->setArguments(array(new Reference('http_kernel'), new Reference('httpcache.store')));
 
+return $sc;
 ?>
