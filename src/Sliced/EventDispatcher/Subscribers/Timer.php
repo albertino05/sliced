@@ -27,7 +27,7 @@ class Timer implements EventSubscriberInterface
 	  $request = $event->getRequest();
 	  $startTime = microtime(true);
 	  $request->attributes->set('startTime', $startTime);
-	  $this->startTime=$startTime;
+	  $this->startTime = $startTime;
       }
 
       /**
@@ -36,11 +36,55 @@ class Timer implements EventSubscriberInterface
        */
       public function onTerminate(Event\PostResponseEvent $event)
       {
-	  /*$startTime = $event->getRequest()->attributes->get('startTime');*/
+	  echo '<br>' . __FUNCTION__ . '<br>';
+
+	  /* $startTime = $event->getRequest()->attributes->get('startTime'); */
+	  $startTime = $event->getRequest()->attributes->get('startTime');
+	  $startTime = $this->startTime;
+	  $runTime = microtime(true) - $startTime;
+	  $output = sprintf("loading time: %2.3f ms <hr />", $runTime);
+	  echo $output;
+      }
+
+      public function onController(Event\FilterControllerEvent $event)
+      {
+	  echo '<br>' . __FUNCTION__ . '<br>';
+
 	  $startTime = $event->getRequest()->attributes->get('startTime');
 	  $runTime = microtime(true) - $startTime;
-	  $output = sprintf("<hr />loading time: %2.4f ms ", $runTime);
+	  $output = sprintf("loading time: %2.3f ms<hr /> ", $runTime);
 	  echo $output;
+      }
+
+      public function onView(Event\GetResponseForControllerResultEvent $event)
+      {
+	  echo '<br>' . __FUNCTION__ . '<br>';
+
+	  $startTime = $event->getRequest()->attributes->get('startTime');
+	  $runTime = microtime(true) - $startTime;
+	  $output = sprintf("loading time: %2.3f ms <hr />", $runTime);
+	  echo $output;
+	  $x = $event->getControllerResult();
+	  $x = '<h1>' . $x . '</h1>';
+	  $event->setResponse(new \Symfony\Component\HttpFoundation\Response($x));
+      }
+
+      public function onResponse(Event\FilterResponseEvent $event)
+      {
+	  echo '<br>' . __FUNCTION__ . '<br>';
+	  $startTime = $event->getRequest()->attributes->get('startTime');
+	  $runTime = microtime(true) - $startTime;
+	  $output = sprintf("loading time: %2.3f ms <hr />", $runTime);
+	  echo $output;
+      }
+      public function onException(Event\GetResponseForExceptionEvent $event)
+      {
+	  echo '<br>' . __FUNCTION__ . '<br>';
+	  $startTime = $event->getRequest()->attributes->get('startTime');
+	  $runTime = microtime(true) - $startTime;
+	  $output = sprintf("loading time: %2.3f ms <hr />", $runTime);
+	  echo $output;
+	  $event->setResponse(new \Symfony\Component\HttpFoundation\Response('erro no kernel'));
       }
 
       /**
@@ -57,6 +101,18 @@ class Timer implements EventSubscriberInterface
 	      ),
 	      HttpKernel\KernelEvents::TERMINATE => array(
 		array('onTerminate', -200)
+	      ),
+	      HttpKernel\KernelEvents::VIEW => array(
+		array('onView', -200)
+	      ),
+	      HttpKernel\KernelEvents::CONTROLLER => array(
+		array('onController', -200)
+	      ),
+	      HttpKernel\KernelEvents::RESPONSE => array(
+		array('onResponse', -200)
+	      ),
+	      HttpKernel\KernelEvents::EXCEPTION => array(
+		array('onException', -200)
 	      ),
 	  );
       }

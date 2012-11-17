@@ -17,7 +17,7 @@ class LeapYearController extends \Sliced\Controller
 	  if ($leapyear->isLeapYear($year)) {
 	        return 'Yep, this is a leap year!';
 	  }
-
+	  
 	  return 'Nope, this is not a leap year.';
       }
 

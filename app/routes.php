@@ -5,6 +5,13 @@
 
 use Symfony\Component\Routing;
 
+$cached_matcher = __DIR__ . '/cache/cached_matcher.php';
+
+if (file_exists($cached_matcher)&& !$debug) {
+      require_once $cached_matcher;
+      return;
+}
+
 $routes = new Routing\RouteCollection();
 
 /**
@@ -23,5 +30,9 @@ $routes->add('leap_year', new Routing\Route('/is_leap_year/{year}', array(
 	  '_controller' => 'Calendar\\Controller\\LeapYearController::indexAction',
         )));
 
-return $routes;
+$dumper = new Routing\Matcher\Dumper\PhpMatcherDumper($routes);
+file_put_contents($cached_matcher, $dumper->dump(array('class' => 'cached_matcher')));
+
+require_once $cached_matcher;
+return;
 ?>

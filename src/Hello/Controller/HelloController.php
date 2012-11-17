@@ -13,8 +13,17 @@ class HelloController extends Controller
 
       function indexAction($name, Request $request)
       {
-	  $response =  new Response($name . ' ! ' . rand(0,100) );
-	 $response->setTtl(20);
+	  //throw new \Exception; return;
+	  
+	  $response = new Response($name . ' ! ' . rand(0, 100) . '<br>');
+/*
+	  $response->setPublic();
+	  $response->setETag('tino');
+
+	  if ($response->isNotModified($request)) {
+	        return $response;
+	  }
+*/
 	  return $response;
       }
 

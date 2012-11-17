@@ -21,10 +21,12 @@ $loader->registerNamespaces(
 	  'Symfony\\Component\\HttpKernel' => __DIR__ . '/vendor/symfony/http-kernel',
 	  'Symfony\\Component\\EventDispatcher' => __DIR__ . '/vendor/symfony/event-dispatcher',
 	  'Symfony\\Component\\DependencyInjection' => __DIR__ . '/vendor/symfony/dependency-injection',
+	  'Symfony\\Component\\Config' => __DIR__ . '/vendor/symfony/config',
         )
 );
 
 $loader->registerNamespaceFallback(__DIR__ . '/src');
+$loader->registerNamespaceFallback(__DIR__ . '/app');
 
 $loader->register();
 ?>
