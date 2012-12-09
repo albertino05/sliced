@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 include __DIR__ . '/routes.php';
 
@@ -16,7 +17,7 @@ if (file_exists($file) && !$debug) {
       require_once $file;
       return new cached_container();
 }
-d('tino');
+
 $parameterBag = new DependencyInjection\ParameterBag\ParameterBag();
 $parameterBag->set('debug', $debug);
 $parameterBag->set('context_class', 'Symfony\Component\Routing\RequestContext');
@@ -26,13 +27,18 @@ $parameterBag->set('resolver_class', 'Symfony\Component\HttpKernel\Controller\Co
 
 $sc = new DependencyInjection\ContainerBuilder($parameterBag);
 
+/*    FROM YAML FILES   */
 $loader = new YamlFileLoader($sc, new FileLocator(__DIR__));
 $loader->load('services.yml');
 
-$sc->register('context', '%context_class%');
+/*    FROM XML FILES    */
+$loader = new XmlFileLoader($sc, new FileLocator(__DIR__));
+$loader->load('services.xml');
 
-$sc->register('matcher', '%matcher_class_optimized%')
-        ->setArguments(array(new Reference('context')))
+/*$sc->register('context', '%context_class%');*/
+
+/*$sc->register('matcher', '%matcher_class_optimized%')*/
+        /*->setArguments(array(new Reference('context')))*/
 ;
 //$sc->register('matcher', '%matcher_class%')
 //      ->setArguments(array($routes, new Reference('context')))
