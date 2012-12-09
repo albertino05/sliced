@@ -5,6 +5,8 @@
 use Symfony\Component\DependencyInjection;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 include __DIR__ . '/routes.php';
 
@@ -14,7 +16,7 @@ if (file_exists($file) && !$debug) {
       require_once $file;
       return new cached_container();
 }
-
+d('tino');
 $parameterBag = new DependencyInjection\ParameterBag\ParameterBag();
 $parameterBag->set('debug', $debug);
 $parameterBag->set('context_class', 'Symfony\Component\Routing\RequestContext');
@@ -23,6 +25,9 @@ $parameterBag->set('matcher_class_optimized', 'cached_matcher');
 $parameterBag->set('resolver_class', 'Symfony\Component\HttpKernel\Controller\ControllerResolver');
 
 $sc = new DependencyInjection\ContainerBuilder($parameterBag);
+
+$loader = new YamlFileLoader($sc, new FileLocator(__DIR__));
+$loader->load('services.yml');
 
 $sc->register('context', '%context_class%');
 
@@ -35,8 +40,8 @@ $sc->register('matcher', '%matcher_class_optimized%')
 
 $sc->register('resolver', '%resolver_class%');
 
-$sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')
-        ->setArguments(array(new Reference('matcher')));
+/*$sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener')*/
+        /*->setArguments(array(new Reference('matcher')));*/
 
 //$sc->register('listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener')
 //     ->setArguments(array('UTF-8'));
@@ -44,12 +49,13 @@ $sc->register('listener.router', 'Symfony\Component\HttpKernel\EventListener\Rou
 //     ->setArguments(array('Calendar\\Controller\\ErrorController::exceptionAction'));
 
 /* $sc->register('listener.test', 'Sliced\EventDispatcher\Subscribers\Test'); */
-$sc->register('listener.timer', 'Sliced\EventDispatcher\Subscribers\Timer');
+/*$sc->register('listener.timer', 'Sliced\EventDispatcher\Subscribers\Timer');*/
 
-$sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')
-        ->addMethodCall('addSubscriber', array(new Reference('listener.router')))
+
+/*$sc->register('dispatcher', 'Symfony\Component\EventDispatcher\EventDispatcher')*/
+        /*->addMethodCall('addSubscriber', array(new Reference('listener.router')))*/
         //->addMethodCall('addSubscriber', array(new Reference('listener.test')))
-        ->addMethodCall('addSubscriber', array(new Reference('listener.timer')))
+        /*->addMethodCall('addSubscriber', array(new Reference('listener.timer')))*/
 ;
 // ->addMethodCall('addSubscriber', array(new Reference('listener.response')))
 // ->addMethodCall('addSubscriber', array(new Reference('listener.exception')))

@@ -1,5 +1,5 @@
 {
-    "hash": "b1802874c85e31f2ed46b6c2e783dc81",
+    "hash": "104fc224fdf124705294e9768f131e76",
     "packages": [
         {
             "name": "symfony/class-loader",
@@ -431,6 +431,54 @@
             "homepage": "http://symfony.com"
         },
         {
+            "name": "symfony/yaml",
+            "version": "dev-master",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml",
+                "reference": "bed4fddc24392513e01b32a78d600b1272ed9a6c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/symfony/Yaml/archive/bed4fddc24392513e01b32a78d600b1272ed9a6c.zip",
+                "reference": "bed4fddc24392513e01b32a78d600b1272ed9a6c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "time": "2012-11-13 14:08:04",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "http://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com"
+        },
+        {
             "name": "twig/twig",
             "version": "v1.10.0",
             "source": {
@@ -487,6 +535,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "symfony/config": 20,
-        "symfony/console": 20
+        "symfony/console": 20,
+        "symfony/yaml": 20
     }
 }

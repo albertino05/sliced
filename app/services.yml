@@ -1,0 +1,20 @@
+parameters:
+  name: "tino"
+  
+services:
+      listener.timer:
+            class: Sliced\EventDispatcher\Subscribers\Timer
+            
+      listener.router:
+            class: Symfony\Component\HttpKernel\EventListener\RouterListener
+            arguments: [ @matcher ]
+            
+      dispatcher:
+            class: Symfony\Component\EventDispatcher\EventDispatcher
+            calls:
+                  - [ addSubscriber, [ @listener.router ] ]
+                  - [ addSubscriber, [ @listener.timer ] ]
+                  
+                  
+    
+    
